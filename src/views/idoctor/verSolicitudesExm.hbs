@@ -1,0 +1,39 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-bookmark" style="color: #cd5070;"></i>&nbsp;&nbsp;Solicitudes de exámenes médicos
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Lista de Solicitudes</h3>
+        {{#if solexamList}}
+            {{#each solexamList}}
+                <div class="row simple-card">
+                    <p class="no-padding">
+                        <form action="/idoctor/ver-solicitudes-examenes/{{id_solicitud}}" id="main-form" method="POST" class="form-margin" enctype="multipart/form-data">
+                            <b>Folio:</b> {{id_solicitud}} <br>
+                            <b>Tipo de Exámen:</b> {{nombre_exmmed}} <br>
+                            <b>PDF:</b> 
+                            {{#if pdf_solicitud}}
+                                <a href="/idoctor/download/{{pdf_solicitud}}">Descargar PDF</a> | <input type="file" name="pdf_solicitud">
+                            {{else}}
+                                <input type="file" name="pdf_solicitud">
+                            {{/if}}<br>
+                            <b>Comentarios:</b><br>
+                            <textarea name="res_solicitud" class="u-full-width text-area-size" required>{{res_solicitud}}</textarea><br>
+                            <input class="button-primary" type="submit" value="Guardar Cambios">
+                        </form>
+                    </p>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="row simple-card">
+                No hay solicitudes registradas
+            </div>
+        {{/if}}
+    </div>
+</div>

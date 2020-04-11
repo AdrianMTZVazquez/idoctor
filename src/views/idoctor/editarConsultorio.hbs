@@ -1,0 +1,32 @@
+<div class="container container-outside">
+    <div class="row">
+        <p class="container-outside-style">
+            <i class="fa fa-building" style="color: #cd5070;"></i>&nbsp;&nbsp;Consultorios / 
+            <a href="/idoctor/ver-consultorios">
+                <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+            </a>
+            &nbsp;/&nbsp;
+            <i class="fa fa-file-text"></i>&nbsp;&nbsp;Editar Consultorio
+        </p>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        {{#each consltLista}}
+        <form action="/idoctor/editar-consultorio/{{id_conslt}}" method="POST" class="form-margin">
+            <h3>Editar Consultorio</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre:</label>
+                    <input class="u-full-width" type="text" value="{{alias_conslt}}" placeholder="10-A" name="alias_conslt" autofocus>
+                </div>
+
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Guardar Cambios">
+                </div>
+            </div>
+        </form>
+        {{/each}}
+    </div>
+</div>

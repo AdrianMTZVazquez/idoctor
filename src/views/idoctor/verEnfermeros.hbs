@@ -1,0 +1,32 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-user-plus" style="color: #cd5070;"></i>&nbsp;&nbsp;Enfermeros / 
+                <a href="/idoctor/agregar-enfermero">
+                    <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Agregar Enfermero
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Lista de Enfermeros</h3>
+        {{#if enfLista}}
+            {{#each enfLista}}
+                <div class="row simple-card">
+                    <p class="no-padding">
+                        <b>Nombre:</b> {{nombre_enf}} <br>
+                        <b>Alias:</b> {{alias_enf}} <br>
+                    </p>
+                    <a href="/idoctor/editar-enfermero/{{id_enf}}" class="button button-primary no-padding">Editar</a>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="row simple-card">
+                No hay enfermeros registrados
+            </div>
+        {{/if}}
+    </div>
+</div>

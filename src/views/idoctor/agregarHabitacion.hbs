@@ -1,0 +1,59 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-map-marker" style="color: #cd5070;"></i>&nbsp;&nbsp;Habitaciones / 
+                <a href="/idoctor/ver-habitaciones">
+                    <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+                </a>
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Formulario de Habitaciones
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/agregar-habitacion" method="POST" class="form-margin">
+            <h3>Agregar Habitación</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Id de la habitación:</label>
+                    <input class="u-full-width" type="text" placeholder="HAB-0" name="alias_hab" autofocus required>
+                </div>
+                <div class="six columns">
+                    <label>Asignar doctor:</label>
+                    {{#if habDatos.drLista}}
+                        <select class="u-full-width" name="id_dr">
+                            <option></option>
+                            {{#each habDatos.drLista}}
+                                <option value="{{id_dr}}">{{alias_dr}}</option>
+                            {{/each}}
+                        </select>
+                    {{else}}
+                        <label>No se encontró ningún doctor.</label>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Asignar enfermero:</label>
+                    {{#if habDatos.enLista}}
+                        <select class="u-full-width" name="id_enf">
+                            <option></option>
+                            {{#each habDatos.enLista}}
+                                <option value="{{id_enf}}">{{alias_enf}}</option>
+                            {{/each}}
+                        </select>
+                    {{else}}
+                        <label>No se encontró ningún enfermero.</label>
+                    {{/if}}
+                </div>
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Agregar Habitación">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

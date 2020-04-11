@@ -1,0 +1,162 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-users" style="color: #cd5070;"></i>&nbsp;&nbsp;Pacientes / 
+                <a href="/idoctor/ver-pacientes">
+                    <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+                </a>
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Forma: Editar Paciente
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/editar-paciente/{{pacDatos.id_pac}}" method="POST" class="form-margin">
+            <h3>Editar Paciente</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre del paciente:</label>
+                    <input class="u-full-width" type="text" value="{{pacDatos.nombre_pac}}" placeholder="Nombre Apellidos" name="nombre_pac" required autofocus>
+                </div>
+                <div class="three columns">
+                    <label>Tipo de paciente:</label>
+                    <input type="radio" id="Transitorio" onclick="pacTransit()" name="tipo_pac" value="1" {{#if (ifcmp pacDatos.tipo_pac 1)}}checked{{/if}}>
+                    Transitorio
+                    <br>
+                    <input type="radio" id="Internado" {{#if pacDatos.habLst}}{{#if pacDatos.id_hab}}onclick="setTipoPacSel('{{#each pacDatos.habLst.innLista}}{{id_hab}}|{{alias_hab}}@{{/each}}','{{pacDatos.id_hab}}','{{pacDatos.alias_hab}}')"{{else}}onclick="setTipoPac('{{#each pacDatos.habLst.innLista}}{{id_hab}}|{{alias_hab}}@{{/each}}')"{{/if}}{{else}}onclick="noHab()"{{/if}} 
+                           name="tipo_pac" value="2" {{#if (ifcmp pacDatos.tipo_pac 2)}}checked{{/if}}>
+                    Internado
+                </div>
+                <div class="three columns">
+                    {{#if (ifcmp pacDatos.tipo_pac 1)}}
+                        <p id="tipo-pac" class="no-padding"></p>
+                    {{else}}
+                        <p id="tipo-pac" class="no-padding">
+                            {{#if pacDatos.habLst}}
+                                {{#if pacDatos.id_hab}}
+                                    <b>Seleccionar Habitación:</b> Habitación acutal <b class="red">{{pacDatos.alias_hab}}</b>
+                                    <select class='u-full-width no-padding' name='id_hab' required>
+                                        <option value="{{pacDatos.alias_hab}}">{{pacDatos.alias_hab}}</option>
+                                        <option></option>
+                                        {{#each pacDatos.habLst.innLista}}
+                                            <option value="{{id_hab}}">{{alias_hab}}</option>
+                                        {{/each}}
+                                    </select>
+                                {{else}}
+                                    <label>Seleccionar Habitación</label>
+                                    <select class='u-full-width no-padding' name='id_hab' required>
+                                        <option></option>
+                                        {{#each pacDatos.habLst.innLista}}
+                                            <option value="{{id_hab}}">{{alias_hab}}</option>
+                                        {{/each}}
+                                    </select>
+                                {{/if}}
+                            {{else}}
+                                {{#if pacDatos.id_hab}}
+                                    <b>Seleccionar Habitación:</b> Habitación acutal <b class="red">{{pacDatos.alias_hab}}</b>
+                                    <br>
+                                    <select class='u-full-width no-padding' name='id_hab' required>
+                                        <option value="{{pacDatos.id_hab}}">{{pacDatos.alias_hab}}</option>
+                                        <option></option>
+                                    </select>
+                                {{else}}
+                                    <label>Seleccionar Habitación:</label>No hay habitaciones disponibles.
+                                {{/if}}
+                            {{/if}}
+                        </p>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Fecha de nacimiento:</label>
+                    <input class="u-full-width date-picker" type="date" value="{{pacDatos.fecha_nac_pac}}" name="fecha_nac_pac" required>
+                </div>
+                <div class="three columns">
+                    <label>Alergias:</label>
+                    <p id="agr-alergias" class="no-padding">
+                        {{#if pacDatos.alrg_pac}}
+                            <textarea class="u-full-width no-padding" placeholder="Listar alergias" name="alrg_pac" style="max-width: 100%;" required>{{pacDatos.alrg_pac}}</textarea>
+                            <i onclick="delAlergiaPass('{{trimLB pacDatos.alrg_pac}}')" class="fa fa-minus-circle" style="color: #cd5070;font-size:20px;cursor: pointer;"></i>
+                        {{else}}
+                            <i onclick="addAlergia()" class="fa fa-plus-circle" style="color: #cd5070;font-size:20px;cursor: pointer;"></i>
+                        {{/if}}
+                    </p>
+                </div>
+                <div class="three columns">
+                    <label>Enfermedad Preexistentes:</label>
+                    <p id="agr-preex-enf" class="no-padding">
+                        {{#if pacDatos.enf_prex_pac}}
+                            <textarea class="u-full-width no-padding" placeholder='Listar enfermedades preexistentes' name='enf_prex_pac' style="max-width: 100%;" required>{{pacDatos.enf_prex_pac}}</textarea>
+                            <i onclick="delPreexEnfPass('{{trimLB pacDatos.enf_prex_pac}}')" class="fa fa-minus-circle" style="color: #cd5070;font-size:20px;cursor: pointer;"></i>
+                        {{else}}
+                            <i onclick="addPreexEnf()" class="fa fa-plus-circle" style="color: #cd5070;font-size:20px;cursor: pointer;"></i>
+                        {{/if}}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Sexo del paciente:</label>
+                    <select class="u-full-width" name="sexo_pac" required>
+                        <option></option>
+                        <option value="Femenino" {{#if (ifcmp pacDatos.sexo_pac 'Femenino')}}selected{{/if}}>Femenino</option>
+                        <option value="Masculino" {{#if (ifcmp pacDatos.sexo_pac 'Masculino')}}selected{{/if}}>Masculino</option>
+                    </select>
+                </div>
+
+                <div class="six columns">
+                    <label>Lugar de nacimiento:</label>
+                    <input class="u-full-width" type="text" placeholder="Ciudad De Mexico" value="{{pacDatos.lugar_nac_pac}}" name="lugar_nac_pac" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>CURP:</label>
+                    <input class="u-full-width uppercase" type="text" maxlength="18" value="{{pacDatos.curp_pac}}" placeholder="Máximo 18 caracteres" name="curp_pac" required>
+                </div>
+
+                <div class="six columns">
+                    <label>Grupo sanguíneo:</label>
+                    <select class="u-full-width" name="grp_sang_pac" required>
+                        <option></option>
+                        <option value="O-"  {{#if (ifcmp pacDatos.grp_sang_pac 'O-')}}selected{{/if}}>O-</option>
+                        <option value="O+"  {{#if (ifcmp pacDatos.grp_sang_pac 'O+')}}selected{{/if}}>O+</option>
+                        <option value="A−"  {{#if (ifcmp pacDatos.grp_sang_pac 'A−')}}selected{{/if}}>A−</option>
+                        <option value="A+"  {{#if (ifcmp pacDatos.grp_sang_pac 'A+')}}selected{{/if}}>A+</option>
+                        <option value="B−"  {{#if (ifcmp pacDatos.grp_sang_pac 'B−')}}selected{{/if}}>B−</option>
+                        <option value="B+"  {{#if (ifcmp pacDatos.grp_sang_pac 'B+')}}selected{{/if}}>B+</option>
+                        <option value="AB−" {{#if (ifcmp pacDatos.grp_sang_pac 'AB−')}}selected{{/if}}>AB−</option>
+                        <option value="AB+" {{#if (ifcmp pacDatos.grp_sang_pac 'AB+')}}selected{{/if}}>AB+</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="six columns">
+                    <label>Dirección:</label>
+                    <input class="u-full-width" type="text" value="{{pacDatos.dir_pac}}" placeholder="Paseo de Belgrado 201" name="dir_pac" required>
+                </div>
+
+                <div class="six columns">
+                    <label>Teléfono:</label>
+                    <input class="u-full-width" type="text" value="{{pacDatos.tel_pac}}" placeholder="555-111-22-66" name="tel_pac" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Contacto de referencia:</label>
+                    <input class="u-full-width" type="text" value="{{pacDatos.cont_ref_pac}}" placeholder="Madre/Padre del paciente" name="cont_ref_pac" required>
+                </div>
+
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Guardar Cambios" id="btnSend">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-user-circle" style="color: #cd5070;"></i>&nbsp;&nbsp;Administrador / 
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Forma: Administrador
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/agregar-admin" method="POST" class="form-margin">
+            <h3>Agregar Administrador</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre:</label>
+                    <input class="u-full-width" type="text" placeholder="Nombre Apellidos" name="nombre_admin" autofocus required>
+                </div>
+                <div class="six columns">
+                    <label>Username:</label>
+                    <input class="u-full-width" type="text" placeholder="Admin1" name="alias_admin" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Password:</label>
+                    <input class="u-full-width" type="password" name="password_admin" required>
+                </div>
+
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Agregar Administrador">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

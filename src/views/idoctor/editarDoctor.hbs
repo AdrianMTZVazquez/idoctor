@@ -1,0 +1,88 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-user-md" style="color: #cd5070;"></i>&nbsp;&nbsp;Doctores / 
+                <a href="/idoctor/ver-doctores">
+                    <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+                </a>
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Formulario de Doctores
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/editar-doctor/{{drLista.id_dr}}" method="POST" class="form-margin">
+            <h3>Agregar Doctor</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre:</label>
+                    <input class="u-full-width" type="text" value="{{drLista.nombre_dr}}" placeholder="Nombre Apellidos" name="nombre_dr" autofocus required>
+                </div>
+                <div class="six columns">
+                    <label>Alias:</label>
+                    <input class="u-full-width" type="text" placeholder="Dr Perez" value="{{drLista.alias_dr}}" name="alias_dr" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="two columns">
+                    <label>Password:</label>
+                    <input type="radio" name="passOpt" onclick="cmbPassword(false, 'password_dr')" checked>
+                    No cambiar
+                    <br>
+                    <input type="radio" name="passOpt" onclick="cmbPassword(true, 'password_dr')">
+                    Cambiar
+                </div>
+                <div class="four columns">
+                    <label>&nbsp;</label>
+                    <p id="cambiar-password" class="no-margin"></p>
+                </div>
+                <div class="six columns">
+                    <label>Consultorio:&nbsp;
+                    {{#if drLista.id_conslt}}
+                        Actualmente asignado a {{drLista.alias_conslt}}
+                    {{/if}}
+                    </label>
+                    
+                    {{#if drLista.id_conslt}}
+                            {{#if drLista.clLista.consltLista}}
+                                <select class="u-full-width" name="id_conslt" required>
+                                {{#if drLista.id_conslt}}
+                                    <option value="{{drLista.id_conslt}}">{{drLista.alias_conslt}}</option>
+                                {{/if}}
+                                    <option></option>
+                                {{#each drLista.clLista.consltLista}}
+                                    <option value="{{id_conslt}}">{{alias_conslt}}</option>
+                                {{/each}}
+                                </select>
+                            {{else}}
+                                <select class="u-full-width" name="id_conslt" required>
+                                    <option value="{{drLista.id_conslt}}">{{drLista.alias_conslt}}</option>
+                                    <option></option>
+                                </select>
+                            {{/if}}
+                    {{else}}
+                        {{#if drLista.clLista.consltLista}}
+                                <select class="u-full-width" name="id_conslt" required>
+                                    <option></option>
+                                {{#each drLista.clLista.consltLista}}
+                                    <option value="{{id_conslt}}">{{alias_conslt}}</option>
+                                {{/each}}
+                                </select>
+                        {{else}}
+                            <label>No se encontró ningún consultorio.</label>
+                        {{/if}}
+                    {{/if}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Guardar Cambios">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

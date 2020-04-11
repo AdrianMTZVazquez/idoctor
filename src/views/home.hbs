@@ -1,0 +1,21 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-home" style="color: #cd5070;"></i>&nbsp;&nbsp;Home
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Mi Perfil: {{user.alias_admin}}{{user.alias_dr}}{{user.alias_enf}}{{user.alias_lab}}</h3>
+        <div class="row simple-card">
+            <p class="no-padding">
+                <b>Nombre:</b> {{user.nombre_admin}}{{user.nombre_dr}}{{user.nombre_enf}}{{user.nombre_lab}}<br>
+                <b>Usuario:</b> {{user.alias_admin}}{{user.alias_dr}}{{user.alias_enf}}{{user.alias_lab}}<br>
+            </p>
+            <a href="/idoctor/editar-perfil/{{user.id_admin}}{{user.id_dr}}{{user.id_enf}}{{user.id_lab}}" class="button button-primary no-padding">Editar</a>
+        </div>
+    </div>
+</div>

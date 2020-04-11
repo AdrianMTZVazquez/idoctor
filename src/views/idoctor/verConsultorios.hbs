@@ -1,0 +1,34 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="eigth columns">
+            <p class="container-outside-style">
+                <i class="fa fa-building" style="color: #cd5070;"></i>&nbsp;&nbsp;Consultorios / 
+                <a href="/idoctor/agregar-consultorio">
+                    <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Agregar Consultorio
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Lista de Consultorios</h3>
+        {{#if consltLista}}
+            {{#each consltLista}}
+                <div class="row simple-card">
+                    <b>Consultorio:</b> {{alias_conslt}}<br>
+                    {{#if alias_dr}}
+                        <b>Doctor Asignado:</b> <b class="red">{{alias_dr}}</b><br>
+                    {{else}}
+                        <b>Doctor Asignado:</b> Sin doctor asignado.<br>
+                    {{/if}}
+                    <a href="editar-consultorio/{{id_conslt}}" class="button button-primary no-padding">Editar</a>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="row simple-card">
+                No hay consultorios registrados
+            </div>
+        {{/if}}
+    </div>
+</div>

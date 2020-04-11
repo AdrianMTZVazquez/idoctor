@@ -1,0 +1,77 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-map-marker" style="color: #cd5070;"></i>&nbsp;&nbsp;Habitaciones / 
+                <a href="/idoctor/ver-habitaciones">
+                    <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+                </a>
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Editar Habitación
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/editar-habitacion/{{habLista.id_hab}}" method="POST" class="form-margin">
+            <h3>Editar Habitación</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Id de la habitación:</label>
+                    <input class="u-full-width" type="text" placeholder="HAB-0" value="{{habLista.alias_hab}}" name="alias_hab" autofocus required>
+                </div>
+                <div class="six columns">
+                    <label>Asignar doctor: 
+                        {{#if habLista.id_dr}}
+                            Asignado a <b style="color: #cd5070;">{{habLista.alias_dr}}</b>
+                        {{/if}}
+                    </label>
+                    {{#if habLista.drLst}}
+                        <select class="u-full-width" name="id_dr">
+                            {{#if habLista.id_dr}}
+                                <option value="{{habLista.id_dr}}">{{habLista.alias_dr}}</option>
+                                <option></option>
+                            {{else}}
+                                <option></option>
+                            {{/if}}
+                            {{#each habLista.drLst.drLista}}
+                                <option value="{{id_dr}}">{{alias_dr}}</option>
+                            {{/each}}
+                        </select>
+                    {{else}}
+                        <label>No se encontró ningún doctor.</label>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Asignar enfermero: 
+                        {{#if habLista.id_enf}}
+                            Asignado a <b style="color: #cd5070;">{{habLista.alias_enf}}</b>
+                        {{/if}}
+                    </label>
+                    {{#if habLista.enLst}}
+                        <select class="u-full-width" name="id_enf">
+                            {{#if habLista.id_enf}}
+                                <option value="{{habLista.id_enf}}">{{habLista.alias_enf}}</option>
+                                <option></option>
+                            {{else}}
+                                <option></option>
+                            {{/if}}
+                            {{#each habLista.enLst.enLista}}
+                                <option value="{{id_enf}}">{{alias_enf}}</option>
+                            {{/each}}
+                        </select>
+                    {{else}}
+                        <label>No se encontró ningún enfermero.</label>
+                    {{/if}}
+                </div>
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Guardar Cambios">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

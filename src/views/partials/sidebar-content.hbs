@@ -1,0 +1,50 @@
+<div class="sidenav">
+    {{#if user.id_admin}}
+    <a href="/idoctor/ver-doctores">
+        <i class="fa fa-user-md"></i>&nbsp;&nbsp;
+        Doctores
+    </a>
+    <a href="/idoctor/ver-enfermeros">
+        <i class="fa fa-user-plus"></i>&nbsp;&nbsp;
+        Enfermeros
+    </a>
+    <a href="/idoctor/ver-laboratorista">
+        <i class="fa fa-thermometer"></i>&nbsp;&nbsp;
+        Laboratoristas
+    </a>
+    <a href="/idoctor/ver-habitaciones">
+        <i class="fa fa-map-marker"></i>&nbsp;&nbsp;
+        Habitaciones
+    </a>
+    <a href="/idoctor/ver-consultorios">
+        <i class="fa fa-building"></i>&nbsp;&nbsp;
+        Consultorios
+    </a>
+    {{/if}}
+    {{#if (orOpt user.id_dr user.id_enf)}}
+    <a href="/idoctor/ver-pacientes">
+        <i class="fa fa-users"></i>&nbsp;&nbsp;
+        Pacientes
+    </a>
+    <a href="/idoctor/mis-pacientes">
+        <i class="fa fa-address-book"></i>&nbsp;&nbsp;
+        Mis pacientes
+    </a>
+    {{/if}}
+    {{#if user.id_dr}}
+    <a href="/idoctor/mis-consultas">
+        <i class="fa fa-server"></i>&nbsp;&nbsp;
+        Mis consultas
+    </a>
+    {{/if}}
+    {{#if user.id_lab}}
+    <a href="/idoctor/ver-examenes">
+        <i class="fa fa-area-chart"></i>&nbsp;&nbsp;
+        Exámenes médicos
+    </a>
+    <a href="/idoctor/ver-solicitudes-examenes">
+        <i class="fa fa-bookmark"></i>&nbsp;&nbsp;
+        Solicitudes de exámenes médicos
+    </a>
+    {{/if}}
+</div>

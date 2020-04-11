@@ -1,0 +1,142 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-address-book" style="color: #cd5070;"></i>&nbsp;&nbsp;Mis Pacientes
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Lista de Pacientes</h3>
+        {{#if habcinLista}}
+            {{#each habcinLista}}
+                <label class="collapsible">
+                    <b>Folio:</b> <b style="color: #cd5070;">{{id_pac}}</b><br>
+                    <b>Nombre:</b> <b style="color: #cd5070;">{{nombre_pac}}</b><br>
+                </label>
+                <div class="content">
+                    <p class="fieldset-header">
+                        <b>Datos generales del paciente</b>
+                        <a href="/idoctor/editar-paciente/{{id_pac}}" style="float: right;" class="button button-primary no-padding" type="submit">Editar</a>
+                    </p>
+                    <div class="fieldset-style">
+                        {{#if @root.user.id_dr}}
+                            <b>Enfermero Asignado:</b> {{#if alias_enf}}{{alias_enf}}{{else}}Ningún enfermero asignado{{/if}}<br>
+                        {{else}}
+                            <b>Doctor Asignado:</b> {{#if alias_dr}}{{alias_dr}}{{else}}Ningún doctor asignado{{/if}}<br>
+                        {{/if}}
+                        <b>Fecha de nacimiento:</b> {{fecha_nac_pac}} <br>
+                        <b>Sexo:</b> {{sexo_pac}} <br>
+                        <b>Lugar de nacimiento:</b> {{lugar_nac_pac}} <br>
+                        <b>CURP:</b> {{curp_pac}} <br>
+                        <b>Grupo sanguíneo:</b> {{grp_sang_pac}} <br>
+                        {{#if enf_prex_pac}}
+                            <b class="no-padding">Enfermedades preexistentes:</b><br>
+                            <p class="no-padding extra-space">{{enf_prex_pac}}</p>
+                            <br>
+                        {{else}}
+                            <b>Enfermedades preexistentes:</b> Sin enfermedades registradas.<br>
+                        {{/if}}
+                        {{#if alrg_pac}}
+                            <b>Alergias:</b><br>
+                            <p class="no-padding extra-space">{{alrg_pac}}</p>
+                            <br>
+                        {{else}}
+                            <b>Alergias:</b> Sin alergias registradas.<br>
+                        {{/if}}
+                        <b>Contacto:</b><br>
+                            &emsp;<b>- Dirección:</b> {{dir_pac}}<br>
+                            &emsp;<b>- Teléfono:</b> {{tel_pac}}<br>
+                        <b>Contacto de referencias:</b> {{cont_ref_pac}}<br>
+                        {{#if alias_hab}}
+                            <b>Habitación asignada:</b> {{alias_hab}}<br>
+                        {{/if}}
+                        {{#if diag_pac}}
+                            <b>Diagnóstico:</b><br>
+                            <p class="extra-padding less-tb-margin">
+                                {{diag_pac}}
+                            </p>
+                        {{else}}
+                            <b>Diagnóstico:</b> Paciente sin diagnóstico.<br>
+                        {{/if}}
+                        <b>Lista de consultas: </b><br>
+                        {{#if consltaLista}}
+                            {{#each consltaLista}}
+                            <p class="extra-padding less-tb-margin">
+                                <b>- fecha de consulta: </b>{{fecha_consulta}}<br>
+                                <b>- Solicitudes de examenes:</b><br>
+                                    {{#if solexamLista}}
+                                        {{#each solexamLista}}
+                                            <p class="more-extra-padding less-tb-margin">
+                                                - Folio de Solicitud: {{id_solicitud}}<br>
+                                                - Tipo de Exámen: {{nombre_exmmed}} <br>
+                                                - Resultado: {{#if pdf_solicitud}}<a href="/idoctor/download/{{pdf_solicitud}}">Descargar PDF</a>{{else}}Sin pdf adjunto{{/if}}<br>
+                                                - Observaciones del Laboratorista: <br>
+                                                <p class="more-more-extra-padding less-tb-margin" style="color: #cd5070;font-size: 18px;">
+                                                    {{#if res_solicitud}}{{res_solicitud}}{{else}}Sin observaciones{{/if}}
+                                                </p>
+                                                <hr class="u-full-width hr-pad">
+                                            </p>
+                                        {{/each}}
+                                    {{else}}
+                                        <p class="more-extra-padding less-tb-margin">
+                                            No hay solicitudes registradas
+                                        </p>
+                                    {{/if}}
+                            </p>
+                            {{/each}}
+                        {{else}}
+                            No hay consultas registradas<br>
+                        {{/if}}
+                        {{#if @root.user.id_dr}}
+                            <a href="/idoctor/agendar-consulta/{{id_pac}}" class="button button-primary no-padding">Agendar Consulta</a>
+                        {{/if}}
+                    </div>
+                </div>
+            {{/each}}
+                <script>
+                    var coll = document.getElementsByClassName("collapsible");
+                    var i;
+
+                    for (i = 0; i < coll.length; i++) {
+                        coll[i].addEventListener("click", function() {
+                            this.classList.toggle("active");
+                            var content = this.nextElementSibling;
+                            if(content.style.maxHeight) {
+                                this.style.marginBottom = "15px";
+                                this.style.borderBottomRightRadius = "3px";
+                                this.style.borderBottomLeftRadius = "3px";
+
+                                content.style.borderBottomRightRadius = null;
+                                content.style.borderBottomLeftRadius  = null;
+                                content.style.boxShadow               = null;
+                                content.style.paddingTop              = null;
+                                content.style.paddingBottom           = null;
+                                content.style.marginBottom            = null;
+                                content.style.maxHeight               = null;
+                            }
+                            else {
+                                this.style.marginBottom = "0";
+                                this.style.borderBottomRightRadius = "0";
+                                this.style.borderBottomLeftRadius = "0";
+
+                                content.style.borderBottomRightRadius = "3px";
+                                content.style.borderBottomLeftRadius  = "3px";
+                                content.style.boxShadow               = "1px 2px 2px rgb(170, 170, 170)";
+                                content.style.paddingTop              = "20px";
+                                content.style.paddingBottom           = "20px";
+                                content.style.marginBottom            = "15px";
+                                content.style.maxHeight               = content.scrollHeight + "px";
+                            } 
+                      });
+                    }
+                </script>
+        {{else}}
+            <div class="row simple-card">
+                No hay pacientes registrados
+            </div>
+        {{/if}}
+    </div>
+</div>

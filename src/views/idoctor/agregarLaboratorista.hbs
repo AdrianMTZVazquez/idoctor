@@ -1,0 +1,42 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-thermometer" style="color: #cd5070;"></i>&nbsp;&nbsp;Laboratorista / 
+                <a href="/idoctor/ver-laboratorista">
+                    <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+                </a>
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Formulario de Laboratorista
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/agregar-laboratorista" method="POST" class="form-margin">
+            <h3>Agregar Laboratorista</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre:</label>
+                    <input class="u-full-width" type="text" placeholder="Nombre Apellidos" name="nombre_lab" autofocus required>
+                </div>
+                <div class="six columns">
+                    <label>Alias:</label>
+                    <input class="u-full-width" type="text" placeholder="Lab. Perez" name="alias_lab" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Password:</label>
+                    <input class="u-full-width" type="password" name="password_lab" required>
+                </div>
+
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Agregar Laboratorista">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

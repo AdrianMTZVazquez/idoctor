@@ -1,0 +1,16 @@
+{{> messages }}
+<div class="login_box">
+    <h2 style="color:#2e95d8">iDoctor</h2>
+    <p style="font-size:20px;color:#838788">
+        Para utilizar el sistema ingresa tus datos de
+        usuario para iniciar sesión, si tienes problemas
+        contacta a soporte
+    </p>
+    <form action="/login" method="POST">
+        <input style="margin: 10px 0px 10px 0px" class="u-full-width" type="text" placeholder="Usuario" name="usrName" required><br>
+        <input class="u-full-width" type="password" placeholder="Password" name="usrPass" required>
+        <br><br>
+        <input id="buttons-style" class="button-primary" type="submit" value="Iniciar Sesión">
+    </form>
+    <p style="color:#838788;margin:0">Diplomado Desarrollo Web 2020</p>
+</div>

@@ -1,0 +1,106 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-server" style="color: #cd5070;"></i>&nbsp;&nbsp;Mis Consultas
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Lista de Consultas</h3>
+        {{#if cnsltaLista}}
+            {{#each cnsltaLista}}
+                <label class="collapsible">
+                    <b>Folio:</b> <b style="color: #cd5070;">{{id_consulta}}</b><br>
+                    <b>Nombre:</b> <b style="color: #cd5070;">{{nombre_pac}}</b><br>
+                    <b>Fecha de consulta:</b> <b style="color: #cd5070;">{{fecha_consulta}}</b><br>
+                </label>
+                <div class="content">
+                    <p class="fieldset-header">
+                        <b>Seguimiento de consulta</b>
+                    </p>
+                    <div class="fieldset-style fieldset-h">
+                        <form action="/idoctor/mis-consultas/{{id_pac}}" method="POST" class="form-margin">
+                            <label>Folio del paciente:</label>
+                            <input type="text" name="id_pac" value="{{id_pac}}" disabled><br>
+                            <label>Diagnosticar:</label>
+                            <textarea name="diag_pac" onkeyup="adjustHeight(this,{{@index}})" class="u-full-width text-area-size" required>{{diag_pac}}</textarea><br>
+                            <input class="button-primary" type="submit" value="Guardar Diagnóstico">
+                        </form>
+                        <hr class="hr-pad">
+                        {{#if sol_exam}}
+                            <label>Solicitudes de Exámenes:</label>
+                            {{#each sol_exam.some}}
+                            <p class="extra-padding less-tb-margin">
+                                - Folio de Solicitud: {{solexmLista.id_solicitud}}<br>
+                                - Tipo de Exámen: {{solexmLista.nombre_exmmed}} <br>
+                                - Resultado: {{#if solexmLista.pdf_solicitud}}<a href="/idoctor/download/{{solexmLista.pdf_solicitud}}">Descargar PDF</a>{{else}}Sin pdf adjunto{{/if}}<br>
+                                - Observaciones del Laboratorista: <br>
+                                <p class="more-extra-padding less-tb-margin" style="color: #cd5070; font-size:18px;">
+                                    {{#if solexmLista.res_solicitud}}{{solexmLista.res_solicitud}}{{else}}Sin observaciones{{/if}}
+                                </p>
+                                <hr class="u-full-width hr-pad">
+                            </p>
+                            {{/each}}
+                        {{/if}}
+                        <a href="/idoctor/solicitar-examen/{{id_pac}}/{{id_consulta}}" class="button button-primary no-padding">Solicitar Examen Médico</a>
+                    </div>
+                </div>
+            {{/each}}
+                <script>
+                    function adjustHeight(el, collCnt){
+                        el.style.height = (el.scrollHeight > el.clientHeight) ? (el.scrollHeight)+"px" : "60px";
+                        
+                        var coll = document.getElementsByClassName("collapsible");
+                        
+                        var content = coll[collCnt].nextElementSibling;
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+
+                    var coll = document.getElementsByClassName("collapsible");
+                    var i;
+
+                    for (i = 0; i < coll.length; i++) {
+                        coll[i].addEventListener("click", function() {
+                            this.classList.toggle("active");
+                            var content = this.nextElementSibling;
+                            if(content.style.maxHeight) {
+                                this.style.marginBottom = "15px";
+                                this.style.borderBottomRightRadius = "3px";
+                                this.style.borderBottomLeftRadius = "3px";
+
+                                content.style.borderBottomRightRadius = null;
+                                content.style.borderBottomLeftRadius  = null;
+                                content.style.boxShadow               = null;
+                                content.style.paddingTop              = null;
+                                content.style.paddingBottom           = null;
+                                content.style.marginBottom            = null;
+                                content.style.maxHeight               = null;
+                                content.style.overflowY               = null;
+                            }
+                            else {
+                                this.style.marginBottom = "0";
+                                this.style.borderBottomRightRadius = "0";
+                                this.style.borderBottomLeftRadius = "0";
+
+                                content.style.borderBottomRightRadius = "3px";
+                                content.style.borderBottomLeftRadius  = "3px";
+                                content.style.boxShadow               = "1px 2px 2px rgb(170, 170, 170)";
+                                content.style.paddingTop              = "20px";
+                                content.style.paddingBottom           = "20px";
+                                content.style.marginBottom            = "15px";
+                                content.style.maxHeight               = content.scrollHeight + "px";
+                                content.style.overflowY               = "scroll";
+                            } 
+                      });
+                    }
+                </script>
+        {{else}}
+            <div class="row simple-card">
+                Sin consultas registradas
+            </div>
+        {{/if}}
+    </div>
+</div>

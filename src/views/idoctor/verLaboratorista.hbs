@@ -1,0 +1,32 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-thermometer" style="color: #cd5070;"></i>&nbsp;&nbsp;Laboratorista / 
+                <a href="/idoctor/agregar-laboratorista">
+                    <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Agregar Laboratorista
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Lista de Laboratoristas</h3>
+        {{#if labLista}}
+            {{#each labLista}}
+                <div class="row simple-card">
+                    <p class="no-padding">
+                        <b>Nombre:</b> {{nombre_lab}} <br>
+                        <b>Alias:</b> {{alias_lab}} <br>
+                    </p>
+                    <a href="/idoctor/editar-laboratorista/{{id_lab}}" class="button button-primary no-padding">Editar</a>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="row simple-card">
+                No hay laboratoristas registrados
+            </div>
+        {{/if}}
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-map-marker" style="color: #cd5070;"></i>&nbsp;&nbsp;Habitaciones / 
+                <a href="/idoctor/agregar-habitacion">
+                    <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Agregar Habitación
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Lista de Habitaciones</h3>
+        {{#if habtLista}}
+            {{#each habtLista}}
+                <div class="row simple-card">
+                    <p class="no-padding">
+                        <b>Habitación:</b> {{alias_hab}} <br>
+                        <b>Doctor Asignado:</b>
+                        {{#if alias_dr}}
+                            <b class="red">{{alias_dr}}</b><br>
+                        {{else}}
+                            Sin doctor asignado<br>
+                        {{/if}}
+                        <b>Enfermero Asignado:</b>
+                        {{#if alias_enf}}
+                            <b class="red">{{alias_enf}}</b><br>
+                        {{else}}
+                            Sin enfermero asignado<br>
+                        {{/if}}
+                    </p>
+                    <a href="/idoctor/editar-habitacion/{{id_hab}}" class="button button-primary no-padding">Editar</a>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="row simple-card">
+                No hay habitaciones registradas
+            </div>
+        {{/if}}
+    </div>
+</div>

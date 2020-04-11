@@ -1,0 +1,50 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-area-chart" style="color: #cd5070;"></i>&nbsp;&nbsp;Exámenes Médicos / 
+                <a href="/idoctor/ver-examenes">
+                    <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+                </a>
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Formulario de Exámen Médico
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/agregar-examen" method="POST" class="form-margin">
+            <h3>Agregar Exámen</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre del exámen:</label>
+                    <input class="u-full-width" type="text" placeholder="Análisis de sangre" name="nombre_exmmed" autofocus required>
+                </div>
+                <div class="six columns">
+                    <label>Asignar laboratorista:</label>
+                    {{#if labLista}}
+                        <select class="u-full-width" name="id_lab">
+                            <option></option>
+                            {{#each labLista}}
+                                <option value="{{id_lab}}">{{alias_lab}}</option>
+                            {{/each}}
+                        </select>
+                    {{else}}
+                        <label>No se encontró ningún laboratorista disponible.</label>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Descripción del exámen:</label>
+                    <textarea class="u-full-width" placeholder="Estudio cuantitativo que evalúa la concentración de..." name="desc_exmmed" required></textarea>
+                </div>
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Agregar Exámen">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-area-chart" style="color: #cd5070;"></i>&nbsp;&nbsp;Exámenes Médicos / 
+                <a href="/idoctor/agregar-examen">
+                    <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Agregar Exámen
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Lista de Exámenes</h3>
+        {{#if exmLista}}
+            {{#each exmLista}}
+                <div class="row simple-card">
+                    <b>Nombre de exámen:</b> {{nombre_exmmed}}<br>
+                    <b>Descripción de exámen:</b><br>
+                    <p class="no-margin extra-padding">{{desc_exmmed}}</p>
+                    <b>Laboratorista asignado:</b> 
+                    {{#if id_lab}}
+                        {{alias_lab}}<br>
+                    {{else}}
+                        Sin laboratorista asignado<br>
+                    {{/if}}
+                    <a href="/idoctor/editar-examen/{{id_exmmed}}" class="button button-primary no-padding">Editar</a>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="row simple-card">
+                No hay exámenes registrados
+            </div>
+        {{/if}}
+    </div>
+</div>

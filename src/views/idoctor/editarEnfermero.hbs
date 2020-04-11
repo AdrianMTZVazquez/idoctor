@@ -1,0 +1,50 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-user-plus" style="color: #cd5070;"></i>&nbsp;&nbsp;Enfermeros / 
+                <a href="/idoctor/ver-enfermeros">
+                    <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+                </a>
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Forma: Editar Enfermero
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/editar-enfermero/{{enfDatos.id_enf}}" method="POST" class="form-margin">
+            <h3>Editar Enfermero</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre:</label>
+                    <input class="u-full-width" type="text" value="{{enfDatos.nombre_enf}}" placeholder="Nombre Apellidos" name="nombre_enf" autofocus required>
+                </div>
+                <div class="six columns">
+                    <label>Alias:</label>
+                    <input class="u-full-width" type="text" value="{{enfDatos.alias_enf}}" placeholder="Enf. Perez" name="alias_enf" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="two columns">
+                    <label>Password:</label>
+                    <input type="radio" name="passOpt" onclick="cmbPassword(false, 'password_enf')" checked>
+                    No cambiar
+                    <br>
+                    <input type="radio" name="passOpt" onclick="cmbPassword(true, 'password_enf')">
+                    Cambiar
+                </div>
+                <div class="four columns">
+                    <label>&nbsp;</label>
+                    <p id="cambiar-password" class="no-margin"></p>
+                </div>
+
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Guardar Cambios">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

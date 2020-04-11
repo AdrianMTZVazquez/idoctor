@@ -1,0 +1,48 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-area-chart" style="color: #cd5070;"></i>&nbsp;&nbsp;Exámenes Médicos / 
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Forma: Solicitud E. Médico
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/solicitar-examen/{{pacDatos.id_pac}}/{{id_consulta}}" method="POST" class="form-margin">
+            <h3>Agregar Exámen</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Tipo de exámen:</label>
+                    {{#if exammedLista}}
+                        <select id="exmSelected" class="u-full-width" onchange="descSelected(this)" name="id_exmmed" required>
+                            <option></option>
+                        {{#each exammedLista}}
+                            <option label="{{nombre_exmmed}}" value="{{id_exmmed}}">{{desc_exmmed}}</option>
+                        {{/each}}
+                        </select>
+                    {{else}}
+                        <label>No se encontró ningún exámen médico disponible</label>
+                    {{/if}}
+                </div>
+                <div class="six columns">
+                    <label>Descripción del exámen:</label>
+                    <p id="desc-exammed">
+
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Paciente: <b style="color: #cd5070;">{{pacDatos.nombre_pac}}</b></label>
+                    <label>Folio:&emsp;<input type="text" name="id_pac" value="{{pacDatos.id_pac}}" disabled></label>
+                </div>
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Solicitar Exámen Médico">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

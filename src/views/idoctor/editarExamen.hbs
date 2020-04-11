@@ -1,0 +1,54 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-area-chart" style="color: #cd5070;"></i>&nbsp;&nbsp;Exámenes Médicos / 
+                <a href="/idoctor/ver-examenes">
+                    <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+                </a>
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Forma: Editar Exámen Médico
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/editar-examen/{{exmDatos.id_exmmed}}" method="POST" class="form-margin">
+            <h3>Editar Exámen</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre del exámen:</label>
+                    <input class="u-full-width" type="text" value="{{exmDatos.nombre_exmmed}}" placeholder="Análisis de sangre" name="nombre_exmmed" autofocus required>
+                </div>
+                <div class="six columns">
+                    {{#if exmDatos.lbLst.labLista}}
+                        <label>Asignar laboratorista:</label>
+                        <select class="u-full-width" name="id_lab">
+                        {{#if exmDatos.id_lab}}
+                            <option value="{{exmDatos.id_lab}}">{{exmDatos.alias_lab}}</option>
+                        {{/if}}
+                            <option></option>
+                        {{#each exmDatos.lbLst.labLista}}
+                            <option value="{{id_lab}}">{{alias_lab}}</option>
+                        {{/each}}
+                        </select>
+                    {{else}}
+                        <label>Asignar laboratorista:</label>
+                        <label>No se encontró ningún laboratorista disponible</label>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Descripción del exámen:</label>
+                    <textarea class="u-full-width" placeholder="Estudio cuantitativo que evalúa la concentración de..." name="desc_exmmed" required>{{exmDatos.desc_exmmed}}</textarea>
+                </div>
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Guardar Cambios">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-users" style="color: #cd5070;"></i>&nbsp;&nbsp;Pacientes / 
+                <a href="/idoctor/agregar-paciente">
+                    <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Agregar Paciente
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <h3>Lista de Pacientes</h3>
+        
+        <label class="collapsible" id="collpsbl">
+            <b>Folio:</b> A <br>
+            <b>Nombre:</b> A <br>
+        </label>
+        <div class="content" id="cntnt">
+            
+            <p class="no-padding">
+                <b>Fecha de nacimiento:</b> ASD<br>
+                <b>Sexo:</b> ASD <br>
+                <b>Lugar de nacimiento:</b> ASD <br>
+                <b>CURP:</b> ASD <br>
+                <b>Grupo sanguíneo:</b> ASD <br>
+                    <b class="no-padding">Enfermedades preexistentes:</b>
+                    <p class="no-padding extra-space">AAA</p>
+                    <br>
+                    <b>Enfermedades preexistentes:</b> Sin enfermedades registradas.<br>
+                    <b>Alergias:</b><br>
+                    <p class="no-padding extra-space">ASDSD</p>
+                    <br>
+                    <b>Alergias:</b> Sin alergias registradas.<br>
+                <b>Contacto:</b><br>
+                    &emsp;<b>- Dirección:</b> <br>
+                    &emsp;<b>- Teléfono:</b> <br>
+                <b>Contacto de referencias:</b> <br>
+                    <b>Habitación asignada:</b> <br>
+                    <b>Diagnóstico:</b> <br>
+                    <b>Diagnóstico:</b> Paciente sin diagnóstico.
+            </p>
+            <a href="/idoctor/editar-paciente/{{id_pac}}" class="button button-primary no-padding" type="submit">Editar</a>
+        </div>
+        <label class="collapsible" id="collpsbl">
+            <b>Folio:</b> B <br>
+            <b>Nombre:</b> A <br>
+        </label>
+        <div class="content" id="cntnt">
+            <p class="no-padding">
+                <b>Fecha de nacimiento:</b> ASD<br>
+                <b>Sexo:</b> ASD <br>
+                <b>Lugar de nacimiento:</b> ASD <br>
+                <b>CURP:</b> ASD <br>
+                <b>Grupo sanguíneo:</b> ASD <br>
+                    <b class="no-padding">Enfermedades preexistentes:</b>
+                    <p class="no-padding extra-space">AAA</p>
+                    <br>
+                    <b>Enfermedades preexistentes:</b> Sin enfermedades registradas.<br>
+                    <b>Alergias:</b><br>
+                    <p class="no-padding extra-space">ASDSD</p>
+                    <br>
+                    <b>Alergias:</b> Sin alergias registradas.<br>
+                <b>Contacto:</b><br>
+                    &emsp;<b>- Dirección:</b> <br>
+                    &emsp;<b>- Teléfono:</b> <br>
+                <b>Contacto de referencias:</b> <br>
+                    <b>Habitación asignada:</b> <br>
+                    <b>Diagnóstico:</b> <br>
+                    <b>Diagnóstico:</b> Paciente sin diagnóstico.
+            </p>
+            <a href="/idoctor/editar-paciente/{{id_pac}}" class="button button-primary no-padding" type="submit">Editar</a>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if(content.style.maxHeight) {
+                        this.style.marginBottom = "15px";
+                        this.style.borderBottomRightRadius = "3px";
+                        this.style.borderBottomLeftRadius = "3px";
+
+                        content.style.borderBottomRightRadius = null;
+                        content.style.borderBottomLeftRadius  = null;
+                        content.style.boxShadow               = null;
+                        content.style.paddingTop              = null;
+                        content.style.paddingBottom           = null;
+                        content.style.marginBottom            = null;
+                        content.style.maxHeight               = null;
+                    }
+                    else {
+                        this.style.marginBottom = "0";
+                        this.style.borderBottomRightRadius = "0";
+                        this.style.borderBottomLeftRadius = "0";
+
+                        content.style.borderBottomRightRadius = "3px";
+                        content.style.borderBottomLeftRadius  = "3px";
+                        content.style.boxShadow               = "1px 2px 2px rgb(170, 170, 170)";
+                        content.style.paddingTop              = "20px";
+                        content.style.paddingBottom           = "20px";
+                        content.style.marginBottom            = "15px";
+                        content.style.maxHeight               = content.scrollHeight + "px";
+                    } 
+              });
+            }
+        </script>
+    </div>
+</div>

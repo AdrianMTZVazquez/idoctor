@@ -1,0 +1,66 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-book" style="color: #cd5070;"></i>&nbsp;&nbsp;Agendar Consulta
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/agendar-consulta/{{pacientLista.id_pac}}" method="POST" class="form-margin">
+            <h3>Agregar consulta</h3>
+            <div class="row">
+                <div class="six columns">
+                    <Label>Nombre del paciente:</Label> {{pacientLista.nombre_pac}} <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <b>Fecha de consulta:</b>
+                    <input class="u-full-width date-picker" type="date" name="fecha_consulta" required>
+                </div>
+                <div class="six columns">
+                {{#if pacientLista.no_dr}}
+                    {{#if cnsltrsLista}}
+                        <b>Consultorio:</b>
+                        <select class="u-full-width" name="id_conslt" required>
+                            <option></option>
+                            {{#each cnsltrsLista}}
+                            <option value="{{id_conslt}}">{{alias_conslt}}</option>
+                            {{/each}}
+                        </select><br>
+                        <input class="button-primary u-full-width" type="submit" value="Crear Consulta">
+                    {{else}}
+                        <b>Consultorio:</b> Sin consultorios disponibles<br>
+                        <input class="button-primary u-full-width" type="submit" value="Crear Consulta" disabled>
+                    {{/if}}
+                {{else}}
+                    {{#if (not pacientLista.more_dr)}}
+                        <b>Consultorio:</b>
+                        <select class="u-full-width" name="id_conslt">
+                            <option value="{{pacientLista.id_conslt}}">{{pacientLista.alias_conslt}}</option>
+                        </select><br>
+                        <input class="button-primary u-full-width" type="submit" value="Crear Consulta">
+                    {{else}}
+                        {{#if pacientLista.cnsltLst.consltLista}}
+                            <b>Consultorio:</b>
+                            <select class="u-full-width" name="id_conslt" required>
+                                <option></option>
+                                {{#each pacientLista.cnsltLst.consltLista}}
+                                <option value="{{id_conslt}}">{{alias_conslt}}</option>
+                                {{/each}}
+                            </select><br>
+                            <input class="button-primary u-full-width" type="submit" value="Crear Consulta">
+                        {{else}}
+                            <b>Consultorio:</b> Sin consultorios disponibles<br>
+                            <input class="button-primary u-full-width" type="submit" value="Crear Consulta" disabled>
+                        {{/if}}
+                    {{/if}}
+                {{/if}}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

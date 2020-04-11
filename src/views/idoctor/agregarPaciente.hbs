@@ -1,0 +1,115 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <i class="fa fa-users" style="color: #cd5070;"></i>&nbsp;&nbsp;Pacientes / 
+                <a href="/idoctor/ver-pacientes">
+                    <i class="fa fa-list"></i>&nbsp;&nbsp;Ver Lista
+                </a>
+                &nbsp;/&nbsp;
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Formulario de Paciente
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/agregar-paciente" method="POST" class="form-margin">
+            <h3>Agregar Paciente</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre del paciente:</label>
+                    <input class="u-full-width" type="text" placeholder="Nombre Apellidos" name="nombre_pac" required autofocus>
+                </div>
+                <div class="three columns">
+                    <label>Tipo de paciente:</label>
+                    <input type="radio" id="Transitorio" onclick="pacTransit()" name="tipo_pac" value="1" checked>
+                    Transitorio
+                    <br>
+                    <input type="radio" id="Internado" {{#if pacLista.habLst}}onclick="setTipoPac('{{#each pacLista.habLst.innLista}}{{id_hab}}|{{alias_hab}}@{{/each}}')"{{else}}onclick="noHab()"{{/if}} name="tipo_pac" value="2">
+                    Internado
+                </div>
+                <div class="three columns">
+                    <p id="tipo-pac" class="no-padding"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Fecha de nacimiento:</label>
+                    <input class="u-full-width date-picker" type="date" name="fecha_nac_pac" required>
+                </div>
+                <div class="three columns">
+                    <label>Alergias:</label>
+                    <p id="agr-alergias" class="no-padding">
+                        <i onclick="addAlergia()" class="fa fa-plus-circle" style="color: #cd5070;font-size:20px;cursor: pointer;"></i>
+                    </p>
+                </div>
+                <div class="three columns">
+                    <label>Enfermedad Preexistentes:</label>
+                    <p id="agr-preex-enf" class="no-padding">
+                        <i onclick="addPreexEnf()" class="fa fa-plus-circle" style="color: #cd5070;font-size:20px;cursor: pointer;"></i>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Sexo del paciente:</label>
+                    <select class="u-full-width" name="sexo_pac" required>
+                        <option></option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Masculino">Masculino</option>
+                    </select>
+                </div>
+
+                <div class="six columns">
+                    <label>Lugar de nacimiento:</label>
+                    <input class="u-full-width" type="text" placeholder="Ciudad De Mexico" name="lugar_nac_pac" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>CURP:</label>
+                    <input class="u-full-width uppercase" type="text" maxlength="18" placeholder="Máximo 18 caracteres" name="curp_pac" required>
+                </div>
+
+                <div class="six columns">
+                    <label>Grupo sanguíneo:</label>
+                    <select class="u-full-width" name="grp_sang_pac" required>
+                        <option></option>
+                        <option value="O-">O-</option>
+                        <option value="O+">O+</option>
+                        <option value="A−">A−</option>
+                        <option value="A+">A+</option>
+                        <option value="B−">B−</option>
+                        <option value="B+">B+</option>
+                        <option value="AB−">AB−</option>
+                        <option value="AB+">AB+</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="six columns">
+                    <label>Dirección:</label>
+                    <input class="u-full-width" type="text" placeholder="Paseo de Belgrado 201" name="dir_pac" required>
+                </div>
+
+                <div class="six columns">
+                    <label>Teléfono:</label>
+                    <input class="u-full-width" type="text" placeholder="555-111-22-66" name="tel_pac" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label>Contacto de referencia:</label>
+                    <input class="u-full-width" type="text" placeholder="Madre/Padre del paciente" name="cont_ref_pac" required>
+                </div>
+
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Agregar Paciente" id="btnSend">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
