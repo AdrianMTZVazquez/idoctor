@@ -1384,8 +1384,7 @@ router.post('/editar-perfil/:id', isLoggedIn, async (req, res) => {
 
         if(updDoctr.password_dr != undefined ||
             updDoctr.password_dr != null) {
-             
-            updDoctr.password_dr = await helpers.encryptPassword(updDoctr.password_dr);
+            
             await pool.query('UPDATE doctores SET ? WHERE id_dr = ?', [updDoctr,id]);
             req.flash('success', 'Datos Guardados');
             res.redirect('/home');
