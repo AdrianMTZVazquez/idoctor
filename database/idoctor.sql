@@ -14,19 +14,19 @@ CREATE TABLE `paciente` (
 	`tel_pac` varchar(15) NOT NULL,
 	`cont_ref_pac` varchar(100) NOT NULL,
 	`alta_pac` BOOLEAN NOT NULL,
-	`diag_pac` varchar(1000),
+	`diag_pac` varchar(100000),
 	`id_hab` bigint,
 	PRIMARY KEY (`id_pac`)
 );
 
 CREATE TABLE `enf_preex` (
 	`id_pac` bigint NOT NULL,
-	`enf_prex_pac` varchar(300) NOT NULL
+	`enf_prex_pac` varchar(10000) NOT NULL
 );
 
 CREATE TABLE `alergias` (
 	`id_pac` bigint NOT NULL,
-	`alrg_pac` varchar(100) NOT NULL
+	`alrg_pac` varchar(10000) NOT NULL
 );
 
 CREATE TABLE `doctores` (
@@ -110,7 +110,7 @@ CREATE TABLE `examen_medico` (
 CREATE TABLE `solicitudes_exmmed` (
 	`id_solicitud` bigint NOT NULL AUTO_INCREMENT,
 	`pdf_solicitud` blob,
-	`res_solicitud` varchar(1000) NOT NULL,
+	`res_solicitud` varchar(100000) NOT NULL,
 	`id_exmmed` bigint NOT NULL,
 	`id_pac` bigint NOT NULL,
 	`id_consulta` bigint NOT NULL,
@@ -150,3 +150,18 @@ ALTER TABLE `solicitudes_exmmed` ADD CONSTRAINT `solicitudes_exmmed_fk1` FOREIGN
 ALTER TABLE `solicitudes_exmmed` ADD CONSTRAINT `solicitudes_exmmed_fk2` FOREIGN KEY (`id_consulta`) REFERENCES `consulta`(`id_consulta`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 INSERT INTO `admins`(`nombre_admin`, `alias_admin`, `password_admin`) VALUES ("Administrador","Admin1","1234");
+
+ALTER TABLE `paciente` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `enf_preex` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `alergias` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `doctores` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `admins` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `enfermeros` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `laboratoristas` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `habitaciones` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `doctor_pacientes` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `consultorios` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `consulta` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `enfermero_pacientes` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `examen_medico` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `solicitudes_exmmed` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
