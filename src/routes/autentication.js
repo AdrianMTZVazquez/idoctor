@@ -23,6 +23,10 @@ router.get('/home', isLoggedIn, (req, res) => {
     res.render('home');
 });
 
+router.get('/acerca-de', isLoggedIn, (req, res) => {
+    res.render('about');
+});
+
 router.get('/logout', (req, res) => {
     req.logOut();
     res.redirect('/login');
