@@ -51,20 +51,39 @@
                         {{#if alias_hab}}
                             <b>Habitación asignada:</b> {{alias_hab}}<br>
                         {{/if}}
-                        {{#if diag_pac}}
-                            <b>Diagnóstico:</b>
-                            <p class="extra-padding less-tb-margin" style="color: #cd5070; font-size:18px;">
-                                {{diag_pac}}
-                            </p>
+                        {{#if @root.user.id_admin}}
+                            <form action="/idoctor/ver-pacientes/{{id_pac}}" method="POST" class="form-margin">
+                                <b>Diagnóstico:</b><br>
+                                <textarea name="diag_pac" onkeyup="adjustHeight(this,{{@index}})" class="u-full-width text-area-size" style="margin-bottom: 0;" required>{{diag_pac}}</textarea><br>
+                                <input type="submit" class="button-primary" style="margin-bottom: 0;" value="Guardar Diagnóstico">
+                            </form>
                         {{else}}
-                            <b>Diagnóstico:</b> Paciente sin diagnóstico.<br>
+                            {{#if diag_pac}}
+                                <b>Diagnóstico:</b>
+                                <p class="extra-padding less-tb-margin" style="color: #cd5070; font-size:18px;">
+                                    {{diag_pac}}
+                                </p>
+                            {{else}}
+                                <b>Diagnóstico:</b> Paciente sin diagnóstico.<br>
+                            {{/if}}
                         {{/if}}
+                        {{#if (orOpt @root.user.id_dr @root.user.id_enf)}}
                         <a href="/idoctor/agendar-consulta/{{id_pac}}" class="button button-primary no-padding">Agendar Consulta</a>
+                        {{/if}}
                     </div>
                     
                 </div>
             {{/each}}
                 <script>
+                    function adjustHeight(el, collCnt){
+                        el.style.height = (el.scrollHeight > el.clientHeight) ? (el.scrollHeight)+"px" : "60px";
+                        
+                        var coll = document.getElementsByClassName("collapsible");
+                        
+                        var content = coll[collCnt].nextElementSibling;
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+
                     var coll = document.getElementsByClassName("collapsible");
                     var i;
 
@@ -84,6 +103,9 @@
                                 content.style.paddingBottom           = null;
                                 content.style.marginBottom            = null;
                                 content.style.maxHeight               = null;
+                                {{#if @root.user.id_admin}}
+                                content.style.overflowY               = null;
+                                {{/if}}
                             }
                             else {
                                 this.style.marginBottom = "0";
@@ -97,6 +119,9 @@
                                 content.style.paddingBottom           = "20px";
                                 content.style.marginBottom            = "15px";
                                 content.style.maxHeight               = content.scrollHeight + "px";
+                                {{#if @root.user.id_admin}}
+                                content.style.overflowY               = "scroll";
+                                {{/if}}
                             } 
                       });
                     }

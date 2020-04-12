@@ -77,7 +77,7 @@ router.get('/ver-pacientes', isLoggedIn, async (req, res) =>{
         
         res.render('idoctor/verPacientes',{ pacLista });
     }
-    else {
+    else if(req.user.id_dr || req.user.id_admin) {
         const pacLista = await pool.query('SELECT paciente.id_pac, ' +
                                                  'paciente.foto_pac, ' +
                                                  'paciente.tipo_pac, ' +
@@ -104,8 +104,20 @@ router.get('/ver-pacientes', isLoggedIn, async (req, res) =>{
                                             'LEFT OUTER JOIN habitaciones ' +
                                             'ON paciente.id_hab = habitaciones.id_hab');
         
-        res.render('idoctor/verPacientes',{ pacLista });
+        res.render('idoctor/verPacientes',{ pacLista, user: req.user });
+    } 
+    else {
+        res.redirect('/home');
     }
+});
+
+router.post('/ver-pacientes/:id_pac', isLoggedIn, async (req, res) =>{
+    const { id_pac } = req.params;
+    const { diag_pac } = req.body;
+
+    await pool.query('UPDATE paciente SET diag_pac = ? WHERE id_pac = ?', [diag_pac,id_pac]);
+    req.flash('success', 'Cambios Guardados');
+    res.redirect('/idoctor/ver-pacientes');
 });
 
 //Vista Editar Paciente ------------------------
