@@ -1358,7 +1358,6 @@ router.post('/editar-perfil/:id', isLoggedIn, async (req, res) => {
         if(updAdmin.password_admin != undefined ||
            updAdmin.password_admin != null) {
             
-            updAdmin.password_admin = await helpers.encryptPassword(updAdmin.password_admin);
             await pool.query('UPDATE admins SET ? WHERE id_admin = ?', [updAdmin,id]);
             req.flash('success', 'Datos Guardados');
             res.redirect('/home');
@@ -1384,7 +1383,8 @@ router.post('/editar-perfil/:id', isLoggedIn, async (req, res) => {
 
         if(updDoctr.password_dr != undefined ||
             updDoctr.password_dr != null) {
-            
+             
+            updDoctr.password_dr = await helpers.encryptPassword(updDoctr.password_dr);
             await pool.query('UPDATE doctores SET ? WHERE id_dr = ?', [updDoctr,id]);
             req.flash('success', 'Datos Guardados');
             res.redirect('/home');
