@@ -1,0 +1,47 @@
+<div class="container container-outside">
+    <div class="row">
+        <div class="six columns">
+            <p class="container-outside-style">
+                <a href="/home">
+                    <i class="fa fa-home" style="color: #cd5070;"></i>&nbsp;&nbsp;Home / 
+                </a>
+                <i class="fa fa-file-text"></i>&nbsp;&nbsp;Forma: Editar Perfil
+            </p>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="container container-margin">
+        <form action="/idoctor/editar-perfil/{{user.id_admin}}{{user.id_dr}}{{user.id_enf}}{{user.id_lab}}" method="POST" class="form-margin">
+            <h3>Editar Perfil</h3>
+            <div class="row">
+                <div class="six columns">
+                    <label>Nombre completo:</label>
+                    <input class="u-full-width" type="text" placeholder="Nombre Apellidos" value="{{user.nombre_admin}}{{user.nombre_dr}}{{user.nombre_enf}}{{user.nombre_lab}}" name="{{#if user.id_admin}}nombre_admin{{else}}{{#if user.id_dr}}nombre_dr{{else}}{{#if user.id_enf}}nombre_enf{{else}}nombre_lab{{/if}}{{/if}}{{/if}}" autofocus required>
+                </div>
+                <div class="six columns">
+                    <label>Username:</label>
+                    <input class="u-full-width" type="text" placeholder="Dr Carlos" value="{{user.alias_admin}}{{user.alias_dr}}{{user.alias_enf}}{{user.alias_lab}}" name="{{#if user.id_admin}}alias_admin{{else}}{{#if user.id_dr}}alias_dr{{else}}{{#if user.id_enf}}alias_enf{{else}}alias_lab{{/if}}{{/if}}{{/if}}" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="two columns">
+                    <label>Password:</label>
+                    <input type="radio" name="passOpt" onclick="cmbPassword(false, '{{#if user.id_admin}}password_admin{{else}}{{#if user.id_dr}}password_dr{{else}}{{#if user.id_enf}}password_enf{{else}}password_lab{{/if}}{{/if}}{{/if}}')" checked>
+                    No cambiar
+                    <br>
+                    <input type="radio" name="passOpt" onclick="cmbPassword(true, '{{#if user.id_admin}}password_admin{{else}}{{#if user.id_dr}}password_dr{{else}}{{#if user.id_enf}}password_enf{{else}}password_lab{{/if}}{{/if}}{{/if}}')">
+                    Cambiar
+                </div>
+                <div class="four columns">
+                    <label>&nbsp;</label>
+                    <p id="cambiar-password" class="no-margin"></p>
+                </div>
+                <div class="six columns">
+                    <label>&nbsp;</label>
+                    <input class="button-primary u-full-width" type="submit" value="Guardar Cambios">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

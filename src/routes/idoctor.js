@@ -1335,6 +1335,124 @@ router.get('/download/:file_name', isLoggedIn, (req, res) => {
     res.download(filePath);
 });
 
+router.get('/editar-perfil', isLoggedIn, (req, res) => {
+    res.render('idoctor/editarPerfil',{ user: req.user });
+});
+
+router.post('/editar-perfil/:id', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+
+    if(req.user.id_admin) {
+        const {
+            nombre_admin,
+            alias_admin,
+            password_admin
+        } = req.body;
+
+        const updAdmin = {
+            nombre_admin,
+            alias_admin,
+            password_admin
+        };
+
+        if(updAdmin.password_admin != undefined ||
+           updAdmin.password_admin != null) {
+            
+            updAdmin.password_admin = await helpers.encryptPassword(updAdmin.password_admin);
+            await pool.query('UPDATE admins SET ? WHERE id_admin = ?', [updAdmin,id]);
+            req.flash('success', 'Datos Guardados');
+            res.redirect('/home');
+        }
+        else {
+            await pool.query('UPDATE admins SET nombre_admin = ?, alias_admin = ? WHERE id_admin = ?', [updAdmin.nombre_admin,updAdmin.alias_admin,id]);
+            req.flash('success', 'Datos Guardados');
+            res.redirect('/home');
+        }
+    }
+    else if(req.user.id_dr) {
+        const {
+            nombre_dr,
+            alias_dr,
+            password_dr
+        } = req.body;
+
+        const updDoctr = {
+            nombre_dr,
+            alias_dr,
+            password_dr
+        };
+
+        if(updDoctr.password_dr != undefined ||
+            updDoctr.password_dr != null) {
+             
+            updDoctr.password_dr = await helpers.encryptPassword(updDoctr.password_dr);
+            await pool.query('UPDATE doctores SET ? WHERE id_dr = ?', [updDoctr,id]);
+            req.flash('success', 'Datos Guardados');
+            res.redirect('/home');
+        }
+        else {
+            await pool.query('UPDATE doctores SET nombre_dr = ?, alias_dr = ? WHERE id_dr = ?', [updDoctr.nombre_dr,updDoctr.alias_dr,id]);
+            req.flash('success', 'Datos Guardados');
+            res.redirect('/home');
+        }
+    }
+    else if(req.user.id_enf) {
+        const {
+            nombre_enf,
+            alias_enf,
+            password_enf
+        } = req.body;
+
+        const updEnfrm = {
+            nombre_enf,
+            alias_enf,
+            password_enf
+        };
+
+        if(updEnfrm.password_enf != undefined ||
+            updEnfrm.password_enf != null) {
+             
+            updEnfrm.password_enf = await helpers.encryptPassword(updEnfrm.password_enf);
+            await pool.query('UPDATE enfermeros SET ? WHERE id_enf = ?', [updEnfrm,id]);
+            req.flash('success', 'Datos Guardados');
+            res.redirect('/home');
+        }
+        else {
+            await pool.query('UPDATE enfermeros SET nombre_enf = ?, alias_enf = ? WHERE id_enf = ?', [updEnfrm.nombre_enf,updEnfrm.alias_enf,id]);
+            req.flash('success', 'Datos Guardados');
+            res.redirect('/home');
+        }
+    }
+    else {
+        const {
+            nombre_lab,
+            alias_lab,
+            password_lab
+        } = req.body;
+
+        const updLabtr = {
+            nombre_lab,
+            alias_lab,
+            password_lab
+        };
+
+        if(updLabtr.password_lab != undefined ||
+            updLabtr.password_lab != null) {
+             
+            updLabtr.password_lab = await helpers.encryptPassword(updLabtr.password_lab);
+            await pool.query('UPDATE laboratoristas SET ? WHERE id_lab = ?', [updLabtr,id]);
+            req.flash('success', 'Datos Guardados');
+            res.redirect('/home');
+        }
+        else {
+            await pool.query('UPDATE laboratoristas SET nombre_lab = ?, alias_lab = ? WHERE id_lab = ?', [updLabtr.nombre_lab,updLabtr.alias_lab,id]);
+            req.flash('success', 'Datos Guardados');
+            res.redirect('/home');
+        }
+    }
+    //res.redirect('idoctor/editarPerfil',{ user: req.user });
+});
+
 //==============================================
 //==============================================
 //Test =========================================

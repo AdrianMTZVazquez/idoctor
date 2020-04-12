@@ -148,3 +148,5 @@ ALTER TABLE `solicitudes_exmmed` ADD CONSTRAINT `solicitudes_exmmed_fk0` FOREIGN
 ALTER TABLE `solicitudes_exmmed` ADD CONSTRAINT `solicitudes_exmmed_fk1` FOREIGN KEY (`id_pac`) REFERENCES `paciente`(`id_pac`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE `solicitudes_exmmed` ADD CONSTRAINT `solicitudes_exmmed_fk2` FOREIGN KEY (`id_consulta`) REFERENCES `consulta`(`id_consulta`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+INSERT INTO `admins`(`nombre_admin`, `alias_admin`, `password_admin`) VALUES ("Administrador","Admin1","1234");
