@@ -14,7 +14,7 @@
 </div>
 <div class="content-box">
     <div class="container container-margin">
-        <form action="/idoctor/editar-enfermero/{{enfDatos.id_enf}}" method="POST" class="form-margin">
+        <form action="/idoctor/editar-enfermero/{{enfDatos.id_enf}}" method="POST" class="form-margin" enctype="multipart/form-data">
             <h3>Editar Enfermero</h3>
             <div class="row">
                 <div class="six columns">
@@ -39,7 +39,12 @@
                     <label>&nbsp;</label>
                     <p id="cambiar-password" class="no-margin"></p>
                 </div>
-
+                <div class="six columns">
+                    <label>Cambiar foto de perfil:</label>
+                    <input type="file" name="foto_enf">
+                </div>
+            </div>
+            <div class="row">
                 <div class="six columns">
                     <label>&nbsp;</label>
                     <input class="button-primary u-full-width" type="submit" value="Guardar Cambios">

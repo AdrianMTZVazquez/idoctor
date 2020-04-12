@@ -27,7 +27,6 @@ appExpress.engine('.hbs', handlebars({
     extname: '.hbs',
     helpers: {
         ifcmp: function(inpA, inpB){
-            console.log(inpA + "  " + inpB);
             if(inpA === inpB) {
                 return true;
             }
@@ -54,6 +53,14 @@ appExpress.engine('.hbs', handlebars({
         },
         not: function(boolVal) {
             return !boolVal;
+        },
+        numCards: function(crdIndex) {
+            if(((crdIndex + 1) % 4) === 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     }
 }));

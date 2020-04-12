@@ -14,15 +14,24 @@
     <div class="container container-margin">
         <h3>Lista de Enfermeros</h3>
         {{#if enfLista}}
+            <div class="row">
             {{#each enfLista}}
-                <div class="row simple-card">
-                    <p class="no-padding">
-                        <b>Nombre:</b> {{nombre_enf}} <br>
-                        <b>Alias:</b> {{alias_enf}} <br>
-                    </p>
-                    <a href="/idoctor/editar-enfermero/{{id_enf}}" class="button button-primary no-padding">Editar</a>
+                <div class="three columns">
+                    <div class="simple-card">
+                        <p class="no-padding">
+                            <img src="/images/enfermeros/{{foto_enf}}" class="img-perfil"><br>
+                            <b>Nombre:</b> {{nombre_enf}} <br>
+                            <b>Alias:</b> {{alias_enf}} <br>
+                        </p>
+                        <a href="/idoctor/editar-enfermero/{{id_enf}}" class="button button-primary no-padding">Editar</a>
+                    </div>
                 </div>
+            {{#if (numCards @index)}}
+            </div>
+            <div class="row">
+            {{/if}}
             {{/each}}
+            </div>
         {{else}}
             <div class="row simple-card">
                 No hay enfermeros registrados

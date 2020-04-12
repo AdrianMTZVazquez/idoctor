@@ -21,27 +21,27 @@ CREATE TABLE `paciente` (
 
 CREATE TABLE `enf_preex` (
 	`id_pac` bigint NOT NULL,
-	`enf_prex_pac` varchar(10000) NOT NULL
+	`enf_prex_pac` varchar(100000) NOT NULL
 );
 
 CREATE TABLE `alergias` (
 	`id_pac` bigint NOT NULL,
-	`alrg_pac` varchar(10000) NOT NULL
+	`alrg_pac` varchar(100000) NOT NULL
 );
 
 CREATE TABLE `doctores` (
 	`id_dr` bigint NOT NULL AUTO_INCREMENT,
-	`foto_dr` blob,
-	`nombre_dr` varchar(100) NOT NULL,
-	`alias_dr` varchar(30) NOT NULL,
-	`password_dr` varchar(1000) NOT NULL,
+	`foto_dr` varchar(1000) NOT NULL,
+	`nombre_dr` varchar(1000) NOT NULL,
+	`alias_dr` varchar(400) NOT NULL,
+	`password_dr` varchar(10000) NOT NULL,
 	`id_conslt` bigint,
 	PRIMARY KEY (`id_dr`)
 );
 
 CREATE TABLE `admins` (
 	`id_admin` bigint NOT NULL AUTO_INCREMENT,
-	`foto_admin` blob,
+	`foto_dr` varchar(1000) NOT NULL,
 	`nombre_admin` varchar(100) NOT NULL,
 	`alias_admin` varchar(30) NOT NULL,
 	`password_admin` varchar(1000) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE `admins` (
 
 CREATE TABLE `enfermeros` (
 	`id_enf` bigint NOT NULL AUTO_INCREMENT,
-	`foto_enf` blob,
+	`foto_dr` varchar(1000) NOT NULL,
 	`nombre_enf` varchar(100) NOT NULL,
 	`alias_enf` varchar(30) NOT NULL,
 	`password_enf` varchar(1000) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE `enfermeros` (
 
 CREATE TABLE `laboratoristas` (
 	`id_lab` bigint NOT NULL AUTO_INCREMENT,
-	`foto_lab` blob,
+	`foto_dr` varchar(1000) NOT NULL,
 	`nombre_lab` varchar(100) NOT NULL,
 	`alias_lab` varchar(30) NOT NULL,
 	`password_lab` varchar(1000) NOT NULL,

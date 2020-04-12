@@ -11,11 +11,18 @@
     <div class="container container-margin">
         <h3>Mi Perfil: {{user.alias_admin}}{{user.alias_dr}}{{user.alias_enf}}{{user.alias_lab}}</h3>
         <div class="row simple-card">
-            <p class="no-padding">
-                <b>Nombre:</b> {{user.nombre_admin}}{{user.nombre_dr}}{{user.nombre_enf}}{{user.nombre_lab}}<br>
-                <b>Usuario:</b> {{user.alias_admin}}{{user.alias_dr}}{{user.alias_enf}}{{user.alias_lab}}<br>
-            </p>
-            <a href="/idoctor/editar-perfil" class="button button-primary no-padding">Editar</a>
+            <div class="three columns">
+                <img src="{{#if user.id_admin}}/images/doctores/no-photo.png{{else}}{{#if user.id_dr}}/images/doctores/{{user.foto_dr}}{{else}}{{#if user.id_enf}}/images/enfermeros/{{user.foto_enf}}{{else}}/images/laboratoristas/{{user.foto_lab}}{{/if}}{{/if}}{{/if}}" class="img-perfil">
+            </div>
+            <div class="nine columns">
+                <p class="no-padding">
+                    <br>
+                    
+                    <b>Nombre:</b> {{user.nombre_admin}}{{user.nombre_dr}}{{user.nombre_enf}}{{user.nombre_lab}}<br>
+                    <b>Usuario:</b> {{user.alias_admin}}{{user.alias_dr}}{{user.alias_enf}}{{user.alias_lab}}<br>
+                </p>
+                <a href="/idoctor/editar-perfil" class="button button-primary no-padding">Editar</a>
+            </div>
         </div>
     </div>
 </div>

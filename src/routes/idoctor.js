@@ -3,10 +3,11 @@ const pool     = require('../database');
 const passport = require('passport');
 const helpers  = require('../lib/helpers');
 const multer   = require('multer');
+const fs       = require('fs-extra');
 
 //Storage
 const storage = multer.diskStorage({
-    destination: __dirname + '/../public/res_exam',
+    destination: __dirname + '/../public/',
     filename: function(req, file, cb) {
         cb(null,Date.now() + '-' + file.originalname);
     }
@@ -14,11 +15,13 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage
-}).single('pdf_solicitud');
+});
 
 const { isLoggedIn } = require('../lib/auth');
 const router  = express.Router();
 
+//Metodos Administradores ======================
+//Vista Agregar Administradores ----------------
 router.get('/agregar-admin', isLoggedIn, async (req, res) =>{
     res.render('idoctor/agregarAdmin');
 });
@@ -43,6 +46,8 @@ router.post('/agregar-admin', isLoggedIn, async (req, res) =>{
     req.flash('success', 'Administrador Agregado');
     res.redirect('/home');
 });
+//Metodos Administradores ======================
+//==============================================
 
 //Metodos paciente =============================
 //Vista Ver Pacientes --------------------------
@@ -453,36 +458,69 @@ router.get('/editar-doctor/:id_dr', isLoggedIn, async (req, res) =>{
     res.render('idoctor/editarDoctor',  { drLista: drLista[0] });
 });
 
-router.post('/editar-doctor/:id_dr', isLoggedIn, async (req, res) =>{
+router.post('/editar-doctor/:id_dr', upload.single("foto_dr"), isLoggedIn, async (req, res) =>{
     const { id_dr } = req.params;
     const { nombre_dr,
             alias_dr,
             password_dr,
             id_conslt } = req.body;
     
-    const drAct = {
-        nombre_dr,
-        alias_dr,
-        password_dr,
-        id_conslt
-    };
+    if(res.req.file != undefined ||
+        res.req.file != null) {
+        const drAct = {
+            foto_dr: res.req.file.filename,
+            nombre_dr,
+            alias_dr,
+            password_dr,
+            id_conslt
+        };
+    
+        if(drAct.id_conslt == '' ||
+           drAct.id_conslt == null) {
+            drAct.id_conslt = null;
+        }
+    
+        if(drAct.password_dr == '' ||
+           drAct.password_dr == null) {
+            delete drAct.password_dr;
+        }
+        else {
+            drAct.password_dr = await helpers.encryptPassword(password_dr);
+        }
+        
+        fs.move(res.req.file.path, __dirname + '/../public/images/doctores/' + res.req.file.filename, function (err) {
+            if (err) return console.error(err);
+        });
 
-    if(drAct.id_conslt == '' ||
-       drAct.id_conslt == null) {
-        drAct.id_conslt = null;
-    }
-
-    if(drAct.password_dr == '' ||
-       drAct.password_dr == null) {
-        delete drAct.password_dr;
+        await pool.query('UPDATE doctores SET ? WHERE id_dr = ?',[drAct,id_dr]);
+        req.flash('success', 'Cambios Guardados');
+        res.redirect('/idoctor/ver-doctores');
     }
     else {
-        drAct.password_dr = await helpers.encryptPassword(password_dr);
-    }
+        const drAct = {
+            nombre_dr,
+            alias_dr,
+            password_dr,
+            id_conslt
+        };
+    
+        if(drAct.id_conslt == '' ||
+           drAct.id_conslt == null) {
+            drAct.id_conslt = null;
+        }
+    
+        if(drAct.password_dr == '' ||
+           drAct.password_dr == null) {
+            delete drAct.password_dr;
+        }
+        else {
+            drAct.password_dr = await helpers.encryptPassword(password_dr);
+        }
 
-    await pool.query('UPDATE doctores SET ? WHERE id_dr = ?',[drAct,id_dr]);
-    req.flash('success', 'Cambios Guardados');
-    res.redirect('/idoctor/ver-doctores');
+        await pool.query('UPDATE doctores SET ? WHERE id_dr = ?',[drAct,id_dr]);
+        req.flash('success', 'Cambios Guardados');
+        res.redirect('/idoctor/ver-doctores');
+    }
 });
 
 //Vista Agregar Doctores -------------------------------
@@ -510,29 +548,55 @@ router.get('/agregar-doctor', isLoggedIn, async (req, res) =>{
     res.render('idoctor/agregarDoctor',  { consltLista });
 });
 
-router.post('/agregar-doctor', isLoggedIn, async (req, res) => {
-    const { nombre_dr, 
-            alias_dr, 
-            password_dr,
-            id_conslt } = req.body;
-    
-    const newDoctor = {
-        nombre_dr,
-        alias_dr,
+router.post('/agregar-doctor', upload.single("foto_dr"), isLoggedIn, async (req, res) => {
+    const { 
+        nombre_dr, 
+        alias_dr, 
         password_dr,
         id_conslt
-    };
+    } = req.body;
 
-    if(newDoctor.id_conslt == '')
-    {
-        newDoctor.id_conslt = null;
+    if(res.req.file != undefined ||
+        res.req.file != null) {
+        const newDoctor = {
+            foto_dr: res.req.file.filename,
+            nombre_dr,
+            alias_dr,
+            password_dr,
+            id_conslt
+        };
+
+        fs.move(res.req.file.path, __dirname + '/../public/images/doctores/' + res.req.file.filename, function (err) {
+            if (err) return console.error(err);
+        });
+
+        if(newDoctor.id_conslt == '')
+        {
+            newDoctor.id_conslt = null;
+        }
+        newDoctor.password_dr = await helpers.encryptPassword(password_dr);
+        await pool.query('INSERT INTO doctores SET ?', [newDoctor]);
+        req.flash('success', 'Doctor/a Agregado/a');
+        res.redirect('/idoctor/ver-doctores');
     }
-
-    newDoctor.password_dr = await helpers.encryptPassword(password_dr);
-
-    await pool.query('INSERT INTO doctores SET ?', [newDoctor]);
-    req.flash('success', 'Doctor/a Agregado/a');
-    res.redirect('/idoctor/ver-doctores');
+    else {
+        const newDoctor = {
+            foto_dr: 'no-photo.png',
+            nombre_dr,
+            alias_dr,
+            password_dr,
+            id_conslt
+        };
+    
+        if(newDoctor.id_conslt == '')
+        {
+            newDoctor.id_conslt = null;
+        }
+        newDoctor.password_dr = await helpers.encryptPassword(password_dr);
+        await pool.query('INSERT INTO doctores SET ?', [newDoctor]);
+        req.flash('success', 'Doctor/a Agregado/a');
+        res.redirect('/idoctor/ver-doctores');
+    }
 });
 //==============================================
 
@@ -550,17 +614,34 @@ router.get('/editar-enfermero/:id_enf', isLoggedIn, async (req, res) => {
     res.render('idoctor/editarEnfermero',  { enfDatos: enfDatos[0] });
 });
 
-router.post('/editar-enfermero/:id_enf', isLoggedIn, async (req, res) => {
+router.post('/editar-enfermero/:id_enf', upload.single("foto_enf"), isLoggedIn, async (req, res) => {
     const { id_enf } = req.params;
     const {nombre_enf,
            alias_enf,
            password_enf } = req.body;
     
-    const enfDatos = {
-        nombre_enf,
-        alias_enf,
-        password_enf
-    };
+    var enfDatos;
+
+    if(res.req.file != undefined ||
+        res.req.file != null) {
+        enfDatos = {
+            foto_enf: res.req.file.filename,
+            nombre_enf,
+            alias_enf,
+            password_enf
+        };
+
+        fs.move(res.req.file.path, __dirname + '/../public/images/enfermeros/' + res.req.file.filename, function (err) {
+            if (err) return console.error(err);
+        });
+    }
+    else {
+        enfDatos = {
+            nombre_enf,
+            alias_enf,
+            password_enf
+        };
+    }
 
     if(enfDatos.password_enf == '' ||
        enfDatos.password_enf == null) {
@@ -580,19 +661,37 @@ router.get('/agregar-enfermero', isLoggedIn, (req, res) =>{
     res.render('idoctor/agregarEnfermero',  { layout: 'main' });
 });
 
-router.post('/agregar-enfermero', isLoggedIn, async (req, res) =>{
+router.post('/agregar-enfermero', upload.single("foto_enf"), isLoggedIn, async (req, res) =>{
     const {
         nombre_enf, 
         alias_enf,
         password_enf
     } = req.body;
     
-    const newEnfermero = {
-        nombre_enf,
-        alias_enf,
-        password_enf
-    };
+    var newEnfermero;
     
+    if(res.req.file != undefined ||
+        res.req.file != null) {
+        newEnfermero = {
+            foto_enf: res.req.file.filename,
+            nombre_enf,
+            alias_enf,
+            password_enf
+        };
+
+        fs.move(res.req.file.path, __dirname + '/../public/images/enfermeros/' + res.req.file.filename, function (err) {
+            if (err) return console.error(err);
+        });
+    }
+    else {
+        newEnfermero = {
+            foto_enf: 'no-photo.png',
+            nombre_enf,
+            alias_enf,
+            password_enf
+        };
+    }
+
     newEnfermero.password_enf = await helpers.encryptPassword(password_enf);
 
     await pool.query('INSERT INTO enfermeros SET ?', [newEnfermero]);
@@ -615,17 +714,34 @@ router.get('/editar-laboratorista/:id_lab', isLoggedIn, async (req, res) => {
     res.render('idoctor/editarLaboratorista',  { labDatos: labDatos[0] });
 });
 
-router.post('/editar-laboratorista/:id_lab', isLoggedIn, async (req, res) => {
+router.post('/editar-laboratorista/:id_lab', upload.single("foto_lab"), isLoggedIn, async (req, res) => {
     const { id_lab } = req.params;
     const {nombre_lab,
            alias_lab,
            password_lab } = req.body;
     
-    const labDatos = {
-        nombre_lab,
-        alias_lab,
-        password_lab
-    };
+    var labDatos;
+
+    if(res.req.file != undefined ||
+        res.req.file != null) {
+        labDatos = {
+            foto_lab: res.req.file.filename,
+            nombre_lab,
+            alias_lab,
+            password_lab
+        };
+
+        fs.move(res.req.file.path, __dirname + '/../public/images/laboratoristas/' + res.req.file.filename, function (err) {
+            if (err) return console.error(err);
+        });
+    }
+    else {
+        labDatos = {
+            nombre_lab,
+            alias_lab,
+            password_lab
+        };
+    }
 
     if(labDatos.password_lab == '' ||
        labDatos.password_lab == null) {
@@ -645,16 +761,34 @@ router.get('/agregar-laboratorista', isLoggedIn, (req, res) =>{
     res.render('idoctor/agregarLaboratorista',  { layout: 'main' });
 });
 
-router.post('/agregar-laboratorista', isLoggedIn, async (req, res) =>{
+router.post('/agregar-laboratorista', upload.single("foto_lab"), isLoggedIn, async (req, res) =>{
     const { nombre_lab, 
             alias_lab,
             password_lab } = req.body;
     
-    const newLaboratorista = {
-        nombre_lab,
-        alias_lab,
-        password_lab
-    };
+    var newLaboratorista;
+
+    if(res.req.file != undefined ||
+        res.req.file != null) {
+        newLaboratorista = {
+            foto_lab: res.req.file.filename,
+            nombre_lab,
+            alias_lab,
+            password_lab
+        };
+
+        fs.move(res.req.file.path, __dirname + '/../public/images/laboratoristas/' + res.req.file.filename, function (err) {
+            if (err) return console.error(err);
+        });
+    }
+    else {
+        newLaboratorista = {
+            foto_lab: 'no-photo.png',
+            nombre_lab,
+            alias_lab,
+            password_lab
+        };
+    }
     
     newLaboratorista.password_lab = await helpers.encryptPassword(password_lab);
 
@@ -1320,7 +1454,7 @@ router.get('/ver-solicitudes-examenes', isLoggedIn, async (req, res) => {
     }
 });
 
-router.post('/ver-solicitudes-examenes/:id_solicitud', upload, isLoggedIn, async (req, res) => {
+router.post('/ver-solicitudes-examenes/:id_solicitud', upload.single('pdf_solicitud'), isLoggedIn, async (req, res) => {
     const { id_solicitud } = req.params;
     const {
         res_solicitud
@@ -1329,7 +1463,11 @@ router.post('/ver-solicitudes-examenes/:id_solicitud', upload, isLoggedIn, async
        res.req.file != null)
     {
         const fileName = res.req.file.filename;
-    
+        
+        fs.move(res.req.file.path, __dirname + '/../public/res_exam/' + res.req.file.filename, function (err) {
+            if (err) return console.error(err);
+        });
+
         await pool.query('UPDATE solicitudes_exmmed SET pdf_solicitud = ?, res_solicitud = ? WHERE id_solicitud = ?', [fileName,res_solicitud,id_solicitud]);
         req.flash('success', 'Datos Guardados');
         res.redirect('/idoctor/ver-solicitudes-examenes');

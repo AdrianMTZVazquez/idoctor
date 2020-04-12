@@ -14,26 +14,34 @@
     <div class="container container-margin">
         <h3>Lista de Habitaciones</h3>
         {{#if habtLista}}
+            <div class="row">
             {{#each habtLista}}
-                <div class="row simple-card">
-                    <p class="no-padding">
-                        <b>Habitación:</b> {{alias_hab}} <br>
-                        <b>Doctor Asignado:</b>
-                        {{#if alias_dr}}
-                            <b class="red">{{alias_dr}}</b><br>
-                        {{else}}
-                            Sin doctor asignado<br>
-                        {{/if}}
-                        <b>Enfermero Asignado:</b>
-                        {{#if alias_enf}}
-                            <b class="red">{{alias_enf}}</b><br>
-                        {{else}}
-                            Sin enfermero asignado<br>
-                        {{/if}}
-                    </p>
-                    <a href="/idoctor/editar-habitacion/{{id_hab}}" class="button button-primary no-padding">Editar</a>
+                <div class="three columns">
+                    <div class="simple-card">
+                        <p class="no-padding">
+                            <b>Habitación:</b> <b class="red">{{alias_hab}}</b><br>
+                            <b>Doctor Asignado:</b>
+                            {{#if alias_dr}}
+                                {{alias_dr}}<br>
+                            {{else}}
+                                Sin doctor asignado<br>
+                            {{/if}}
+                            <b>Enfermero Asignado:</b>
+                            {{#if alias_enf}}
+                                {{alias_enf}}<br>
+                            {{else}}
+                                Sin enfermero asignado<br>
+                            {{/if}}
+                        </p>
+                        <a href="/idoctor/editar-habitacion/{{id_hab}}" class="button button-primary no-padding">Editar</a>
+                    </div>
                 </div>
+            {{#if (numCards @index)}}
+            </div>
+            <div class="row">
+            {{/if}}
             {{/each}}
+            </div>
         {{else}}
             <div class="row simple-card">
                 No hay habitaciones registradas

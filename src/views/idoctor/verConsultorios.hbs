@@ -14,17 +14,25 @@
     <div class="container container-margin">
         <h3>Lista de Consultorios</h3>
         {{#if consltLista}}
+            <div class="row">
             {{#each consltLista}}
-                <div class="row simple-card">
-                    <b>Consultorio:</b> {{alias_conslt}}<br>
-                    {{#if alias_dr}}
-                        <b>Doctor Asignado:</b> <b class="red">{{alias_dr}}</b><br>
-                    {{else}}
-                        <b>Doctor Asignado:</b> Sin doctor asignado.<br>
-                    {{/if}}
-                    <a href="editar-consultorio/{{id_conslt}}" class="button button-primary no-padding">Editar</a>
+                <div class="three columns">
+                    <div class="simple-card">
+                        <b>Consultorio:</b> {{alias_conslt}}<br>
+                        {{#if alias_dr}}
+                            <b>Doctor Asignado:</b> <b class="red">{{alias_dr}}</b><br>
+                        {{else}}
+                            <b>Doctor Asignado:</b> Sin doctor asignado.<br>
+                        {{/if}}
+                        <a href="editar-consultorio/{{id_conslt}}" class="button button-primary no-padding">Editar</a>
+                    </div>
                 </div>
+            {{#if (numCards @index)}}
+            </div>
+            <div class="row">
+            {{/if}}
             {{/each}}
+            </div>
         {{else}}
             <div class="row simple-card">
                 No hay consultorios registrados
